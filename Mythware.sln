@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassManager_StudentCrack", "ClassManager_StudentCrack\ClassManager_StudentCrack.csproj", "{55DACB73-C5A7-41F1-8FCF-BACAB3444A5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandBox", "CommandBox\CommandBox.csproj", "{E232850B-6317-45BB-A827-AFE14734C468}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55DACB73-C5A7-41F1-8FCF-BACAB3444A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55DACB73-C5A7-41F1-8FCF-BACAB3444A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55DACB73-C5A7-41F1-8FCF-BACAB3444A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55DACB73-C5A7-41F1-8FCF-BACAB3444A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E232850B-6317-45BB-A827-AFE14734C468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E232850B-6317-45BB-A827-AFE14734C468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E232850B-6317-45BB-A827-AFE14734C468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E232850B-6317-45BB-A827-AFE14734C468}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A8C88CA-AC83-4773-998A-70A54B33EEAC}
+	EndGlobalSection
+EndGlobal
