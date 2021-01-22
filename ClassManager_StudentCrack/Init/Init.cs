@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassManager_StudentCrack.Init
+namespace ClassManager_StudentCrack._Init
 {
-    class _Init
+    class Init
     {
         public static bool GetMythwareRunState()
         {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ClassManager_StudentCrack.Chat.Template
+namespace ClassManager_StudentCrack._Chat.Template
 {
     class Reply
     {

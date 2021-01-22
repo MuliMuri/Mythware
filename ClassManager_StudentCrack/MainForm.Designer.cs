@@ -30,21 +30,21 @@ namespace ClassManager_StudentCrack
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "PC_01",
             "192.168.1.1",
             "存活"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "PC_02",
             "192.168.1.2",
             "死亡"}, -1);
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Windows");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("本地磁盘（C:）", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("本地磁盘（D:）");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("此电脑", new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Windows");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("本地磁盘（C:）", new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("本地磁盘（D:）");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("此电脑", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode7});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.TabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage_RunInfo = new System.Windows.Forms.TabPage();
@@ -79,7 +79,7 @@ namespace ClassManager_StudentCrack
             this.Usual_TextBox_ShowPasswd = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabPage_NetScan = new System.Windows.Forms.TabPage();
-            this.Label_NetIPPart = new System.Windows.Forms.Label();
+            this.Net_Label_IPPart = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.Net_Button_Scan = new System.Windows.Forms.Button();
             this.Net_Button_CardFresh = new System.Windows.Forms.Button();
@@ -131,6 +131,8 @@ namespace ClassManager_StudentCrack
             this.Back_Timer_GetSystemTime = new System.Windows.Forms.Timer(this.components);
             this.File_ContextMenuStrip_Treeview = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Fresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.Net_Label_IPMask = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.TabControl1.SuspendLayout();
             this.tabPage_RunInfo.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -528,7 +530,9 @@ namespace ClassManager_StudentCrack
             // 
             // tabPage_NetScan
             // 
-            this.tabPage_NetScan.Controls.Add(this.Label_NetIPPart);
+            this.tabPage_NetScan.Controls.Add(this.Net_Label_IPMask);
+            this.tabPage_NetScan.Controls.Add(this.label9);
+            this.tabPage_NetScan.Controls.Add(this.Net_Label_IPPart);
             this.tabPage_NetScan.Controls.Add(this.label15);
             this.tabPage_NetScan.Controls.Add(this.Net_Button_Scan);
             this.tabPage_NetScan.Controls.Add(this.Net_Button_CardFresh);
@@ -542,14 +546,14 @@ namespace ClassManager_StudentCrack
             this.tabPage_NetScan.Text = "局域网扫描";
             this.tabPage_NetScan.UseVisualStyleBackColor = true;
             // 
-            // Label_NetIPPart
+            // Net_Label_IPPart
             // 
-            this.Label_NetIPPart.AutoSize = true;
-            this.Label_NetIPPart.Location = new System.Drawing.Point(73, 36);
-            this.Label_NetIPPart.Name = "Label_NetIPPart";
-            this.Label_NetIPPart.Size = new System.Drawing.Size(23, 12);
-            this.Label_NetIPPart.TabIndex = 6;
-            this.Label_NetIPPart.Text = "N/A";
+            this.Net_Label_IPPart.AutoSize = true;
+            this.Net_Label_IPPart.Location = new System.Drawing.Point(73, 36);
+            this.Net_Label_IPPart.Name = "Net_Label_IPPart";
+            this.Net_Label_IPPart.Size = new System.Drawing.Size(23, 12);
+            this.Net_Label_IPPart.TabIndex = 6;
+            this.Net_Label_IPPart.Text = "N/A";
             // 
             // label15
             // 
@@ -591,11 +595,11 @@ namespace ClassManager_StudentCrack
             this.Net_ListView_DevShow.ContextMenuStrip = this.Right_ClickContextMenuStrip_NetShow;
             this.Net_ListView_DevShow.GridLines = true;
             this.Net_ListView_DevShow.HideSelection = false;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
+            listViewItem4.StateImageIndex = 0;
             this.Net_ListView_DevShow.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem3,
+            listViewItem4});
             this.Net_ListView_DevShow.LabelWrap = false;
             this.Net_ListView_DevShow.Location = new System.Drawing.Point(13, 85);
             this.Net_ListView_DevShow.Name = "Net_ListView_DevShow";
@@ -635,13 +639,16 @@ namespace ClassManager_StudentCrack
             // 
             // Net_ComboBox_Card
             // 
-            this.Net_ComboBox_Card.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Net_ComboBox_Card.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Net_ComboBox_Card.DropDownWidth = 400;
             this.Net_ComboBox_Card.FormattingEnabled = true;
             this.Net_ComboBox_Card.Location = new System.Drawing.Point(57, 7);
+            this.Net_ComboBox_Card.MaxDropDownItems = 30;
             this.Net_ComboBox_Card.Name = "Net_ComboBox_Card";
             this.Net_ComboBox_Card.Size = new System.Drawing.Size(327, 20);
+            this.Net_ComboBox_Card.Sorted = true;
             this.Net_ComboBox_Card.TabIndex = 1;
+            this.Net_ComboBox_Card.SelectedValueChanged += new System.EventHandler(this.Net_ComboBox_Card_SelectedValueChanged);
             // 
             // label14
             // 
@@ -918,23 +925,23 @@ namespace ClassManager_StudentCrack
             this.File_TreeView_LocalShow.ImageList = this.File_ImageList_Icon;
             this.File_TreeView_LocalShow.Location = new System.Drawing.Point(0, 0);
             this.File_TreeView_LocalShow.Name = "File_TreeView_LocalShow";
-            treeNode1.Name = "Folder_Windows";
-            treeNode1.Text = "Windows";
-            treeNode2.ImageKey = "Drive";
-            treeNode2.Name = "Drive_C";
-            treeNode2.SelectedImageKey = "Drive";
-            treeNode2.Text = "本地磁盘（C:）";
-            treeNode3.ImageKey = "Drive";
-            treeNode3.Name = "Drive_D";
-            treeNode3.SelectedImageKey = "Drive";
-            treeNode3.Text = "本地磁盘（D:）";
-            treeNode4.ImageKey = "Computer";
-            treeNode4.Name = "Computer";
-            treeNode4.SelectedImageKey = "Computer";
-            treeNode4.StateImageKey = "(无)";
-            treeNode4.Text = "此电脑";
+            treeNode5.Name = "Folder_Windows";
+            treeNode5.Text = "Windows";
+            treeNode6.ImageKey = "Drive";
+            treeNode6.Name = "Drive_C";
+            treeNode6.SelectedImageKey = "Drive";
+            treeNode6.Text = "本地磁盘（C:）";
+            treeNode7.ImageKey = "Drive";
+            treeNode7.Name = "Drive_D";
+            treeNode7.SelectedImageKey = "Drive";
+            treeNode7.Text = "本地磁盘（D:）";
+            treeNode8.ImageKey = "Computer";
+            treeNode8.Name = "Computer";
+            treeNode8.SelectedImageKey = "Computer";
+            treeNode8.StateImageKey = "(无)";
+            treeNode8.Text = "此电脑";
             this.File_TreeView_LocalShow.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4});
+            treeNode8});
             this.File_TreeView_LocalShow.SelectedImageKey = "Folder";
             this.File_TreeView_LocalShow.Size = new System.Drawing.Size(207, 237);
             this.File_TreeView_LocalShow.TabIndex = 0;
@@ -1097,6 +1104,24 @@ namespace ClassManager_StudentCrack
             this.Fresh.Size = new System.Drawing.Size(100, 22);
             this.Fresh.Text = "刷新";
             // 
+            // Net_Label_IPMask
+            // 
+            this.Net_Label_IPMask.AutoSize = true;
+            this.Net_Label_IPMask.Location = new System.Drawing.Point(351, 36);
+            this.Net_Label_IPMask.Name = "Net_Label_IPMask";
+            this.Net_Label_IPMask.Size = new System.Drawing.Size(23, 12);
+            this.Net_Label_IPMask.TabIndex = 8;
+            this.Net_Label_IPMask.Text = "N/A";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(292, 36);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 12);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "IP掩码：";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1208,7 +1233,7 @@ namespace ClassManager_StudentCrack
         private System.Windows.Forms.ContextMenuStrip Right_ClickContextMenuStrip_NetShow;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_NetShow_Clear;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label Label_NetIPPart;
+        private System.Windows.Forms.Label Net_Label_IPPart;
         private System.Windows.Forms.Timer Back_Timer_GetSystemTime;
         private System.Windows.Forms.TabControl TabControl2;
         private System.Windows.Forms.TabPage TabPage_Msg;
@@ -1239,6 +1264,8 @@ namespace ClassManager_StudentCrack
         private System.Windows.Forms.ImageList File_ImageList_Icon;
         private System.Windows.Forms.ContextMenuStrip File_ContextMenuStrip_Treeview;
         private System.Windows.Forms.ToolStripMenuItem Fresh;
+        private System.Windows.Forms.Label Net_Label_IPMask;
+        private System.Windows.Forms.Label label9;
     }
 }
 

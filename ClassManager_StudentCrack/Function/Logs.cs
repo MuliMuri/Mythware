@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace ClassManager_StudentCrack.Function
+namespace ClassManager_StudentCrack._Function
 {
     /// <summary>
     /// 日志定义

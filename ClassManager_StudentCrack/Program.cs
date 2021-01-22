@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ClassManager_StudentCrack._NetWork;
+
 namespace ClassManager_StudentCrack
 {
     static class Program

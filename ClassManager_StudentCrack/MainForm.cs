@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 
-using ClassManager_StudentCrack.Function;
-using ClassManager_StudentCrack.Init;
+using ClassManager_StudentCrack._Function;
+using ClassManager_StudentCrack._Init;
+using ClassManager_StudentCrack._NetWork;
+using System.Collections.Generic;
 
 namespace ClassManager_StudentCrack
 {
@@ -13,6 +15,7 @@ namespace ClassManager_StudentCrack
     {
         // 局部变量声明
         private bool MythwareState;
+        private List<Dictionary<string, string>> CardInfos;
 
         // 重写WndProc
         private const int WM_HOTKEY = 0x312;    //窗口消息-热键
@@ -64,7 +67,7 @@ namespace ClassManager_StudentCrack
         public MainForm()
         {
             InitializeComponent();
-            Chat.SaveChatEXE.CreateCodeEXE();
+            // Chat.SaveChatEXE.CreateCodeEXE();
         }
 
         private void ToolStripMenuItem_LogTextBox_Clear_Click(object sender, EventArgs e)
@@ -121,12 +124,35 @@ namespace ClassManager_StudentCrack
         private void Net_Button_CardFresh_Click(object sender, EventArgs e)
         {
             Net_ComboBox_Card.Items.Clear();
-            NetworkInterface[] NetCard = NetworkInterface.GetAllNetworkInterfaces();
-            for (int i = 0; i < NetCard.Length; i++)
+            // TODO: 更新获取网卡函数
+            if (NetWork.GetNetWorkCard(out CardInfos))
             {
-                Net_ComboBox_Card.Items.Add(NetCard[i].Description);
+                // True
+                for (int i = 0; i < CardInfos.Count; i++)
+                {
+                    string Item = string.Format("[{0}] -- {1} -- {2}",
+                        CardInfos[i]["CardType"],
+                        CardInfos[i]["Name"],
+                        CardInfos[i]["InterFaceType"]);
+
+                    Net_ComboBox_Card.Items.Add(Item);
+
+                }
+                Net_ComboBox_Card.SelectedIndex = 0;
             }
-            Net_ComboBox_Card.SelectedIndex = 0;
+            else
+            {
+                Net_ComboBox_Card.Items.Add("Unknow");
+                Net_ComboBox_Card.SelectedIndex = 0;
+                MessageBox.Show("网卡信息获取失败！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void Net_ComboBox_Card_SelectedValueChanged(object sender, EventArgs e)
+        {
+            Net_Label_IPPart.Text = CardInfos[Net_ComboBox_Card.SelectedIndex]["IP"];
+            Net_Label_IPMask.Text = CardInfos[Net_ComboBox_Card.SelectedIndex]["Mask"];
         }
 
         private void ToolStripMenuItem_NetShow_Clear_Click(object sender, EventArgs e)
@@ -140,13 +166,15 @@ namespace ClassManager_StudentCrack
             MainWin_Label_Time.Text = DateTime.Now.ToLocalTime().ToString();
 
             // 更新 双端 信息
-            RunState_TextBox_LocalIP.Text = Infos.LocalIP;
+
+            // TODO: LocalIP获取
+            // RunState_TextBox_LocalIP.Text = Infos.LocalIP;
 
             // 检测运行状态
             
             if (!MythwareState) // false 启动获取
             {
-                MythwareState = _Init.GetMythwareRunState();
+                MythwareState = Init.GetMythwareRunState();
                 if (MythwareState)
                 {
                     RunState_Label_State.Text = "RUNNING";
@@ -157,7 +185,7 @@ namespace ClassManager_StudentCrack
 
         private void Net_Button_Scan_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(NetWork.NetWork.GetConState().ToString());
+            // TODO: ARP协议 设备获取
         }
 
         private void TextBox_ChatInput_KeyDown(object sender, KeyEventArgs e)
@@ -167,7 +195,7 @@ namespace ClassManager_StudentCrack
 
         private void Chat_Button_Send_Click(object sender, EventArgs e)
         {
-            //TODO: 发送信息 函数
+            // TODO: 发送信息 函数
         }
 
         private void RunState_Button_StateFresh_Click(object sender, EventArgs e)

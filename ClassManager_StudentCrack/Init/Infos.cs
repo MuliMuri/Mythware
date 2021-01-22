@@ -5,11 +5,14 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassManager_StudentCrack.Init
+namespace ClassManager_StudentCrack._Init
 {
     class Infos
     {
-        public static string LocalIP { get; } = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(p => p.AddressFamily.ToString() == "InterNetwork").ToString();
+        /// <summary>
+        /// 若存在多个 IP 段，获取 StudentMain 所用IP
+        /// </summary>
+        // public static string LocalIP { get; } = 
         // TODO: 修物理网卡bug
     }
 }

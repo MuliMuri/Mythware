@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassManager_StudentCrack.Chat
+namespace ClassManager_StudentCrack._Chat
 {
     class SaveChatEXE
     {

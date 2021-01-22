@@ -64,8 +64,6 @@
     <Compile Include="Chat\Template\Reply.Designer.cs">
       <DependentUpon>Reply.cs</DependentUpon>
     </Compile>
-    <Compile Include="Com\CMDBox.cs" />
-    <Compile Include="Com\ComSocket.cs" />
     <Compile Include="Function\HotKeys.cs" />
     <Compile Include="Function\Logs.cs" />
     <Compile Include="Function\MemCore.cs" />

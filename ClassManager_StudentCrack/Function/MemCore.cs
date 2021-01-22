@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace ClassManager_StudentCrack.Function
+namespace ClassManager_StudentCrack._Function
 {
     class MemCore
     {
