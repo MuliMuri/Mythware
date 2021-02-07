@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Threading;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 using ClassManager_StudentCrack._Function;
 using ClassManager_StudentCrack._Init;
 using ClassManager_StudentCrack._NetWork;
-using System.Collections.Generic;
+using ClassManager_StudentCrack._CmdBox;
 
 namespace ClassManager_StudentCrack
 {
@@ -17,7 +19,9 @@ namespace ClassManager_StudentCrack
         private bool MythwareState;
         private List<Dictionary<string, string>> CardInfos;
 
-        // 重写WndProc
+        private Thread _MainLog;
+
+        #region 重写WndProc
         private const int WM_HOTKEY = 0x312;    //窗口消息-热键
         private const int WM_CREATE = 0x1;      //窗口消息-创建
         private const int WM_DESTROY = 0x2;     //窗口消息-销毁
@@ -32,7 +36,10 @@ namespace ClassManager_StudentCrack
                     {
                         // 窗口置顶ID
                         case HotKeys.Global.HotKeyIDs.WindowTop:
-                            MessageBox.Show("Ctrl + Alt + Shift + O");
+                            WindowState = FormWindowState.Normal;
+                            Window.SetWindowPos(Handle, Window.WndStyle.HWND_TOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001);
+                            MainWin_CheckBox_TopWindow.Checked = true;
+                            // MessageBox.Show("Ctrl + Alt + Shift + O");
                             break;
 
                         default:
@@ -63,12 +70,19 @@ namespace ClassManager_StudentCrack
                     break;
             }
         }
+        #endregion
 
         public MainForm()
         {
             InitializeComponent();
             // Chat.SaveChatEXE.CreateCodeEXE();
+            // TopMost = true;
+            //Window.SetWindowPos(Handle, Window.WndStyle.HWND_TOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001); // 设置窗口置顶
+
+            _MainLog = Init.SetLogClass(MainWin_TextBox_Log); // 初始化 日志线程 实例
         }
+
+        // TODO: 日志类
 
         private void ToolStripMenuItem_LogTextBox_Clear_Click(object sender, EventArgs e)
         {
@@ -79,9 +93,22 @@ namespace ClassManager_StudentCrack
         {
             if (MainWin_CheckBox_TopWindow.CheckState == CheckState.Unchecked)
             {
-                DialogResult result = MessageBox.Show("确定取消窗口置顶？\n注：取消后若被教师广播，可使用快捷键 Ctrl+Alt+Shift+O 重新置顶", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-                if (result == DialogResult.Yes) return;
-                else MainWin_CheckBox_TopWindow.CheckState = CheckState.Checked;
+                DialogResult result = MessageBox.Show(
+                    "确定取消窗口置顶？\n注：取消后若被教师广播，可使用快捷键 Ctrl+Alt+Shift+O 重新置顶",
+                    "警告",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button2);
+
+                if (result == DialogResult.Yes)
+                {
+                    Window.SetWindowPos(Handle, Window.WndStyle.HWND_NOTOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001);
+                    // TODO：日志
+                }
+                else
+                {
+                    MainWin_CheckBox_TopWindow.CheckState = CheckState.Checked;
+                }
             }
         }
 
@@ -93,8 +120,6 @@ namespace ClassManager_StudentCrack
 
         private void Usual_Button_ShutdownTask_Click(object sender, EventArgs e)
         {
-            Logs.SetTextBox(MainWin_TextBox_Log);
-            Logs.WriteLogHead(3);
             Process[] Mythware_StudentMain = Process.GetProcessesByName("StudentMain");
             if (Mythware_StudentMain.Length != 0)
             {
@@ -102,12 +127,12 @@ namespace ClassManager_StudentCrack
                 {
                     if (!MemCore.ProcessManager.KillProcess(Mythware_StudentMain[i].Id, true))
                     {
-                        Logs.WriteLog(String.Format("Error! -> 结束进程{0}失败", Mythware_StudentMain[i].Id));
-                        Logs.WriteLog(String.Format("错误代码：{0}", Marshal.GetLastWin32Error().ToString()));
+                        //MainLog((string.Format("Error! -> 结束进程{0}失败", Mythware_StudentMain[i].Id)));
+                        //MainLog((string.Format("错误代码：{0}", Marshal.GetLastWin32Error().ToString())));
                     }
                     else
                     {
-                        Logs.WriteLog(String.Format("Success! -> 结束进程{0}成功", Mythware_StudentMain[i].Id));
+                        //Logs.WriteLog(string.Format("Success! -> 结束进程{0}成功", Mythware_StudentMain[i].Id));
                     }
                 }
                 MythwareState = false;
@@ -116,9 +141,9 @@ namespace ClassManager_StudentCrack
             }
             else
             {
-                Logs.WriteLog("未找到 极域电子教室 进程");
+                //MainLog("aa");
+                //MainLog("未找到 极域电子教室 进程");
             }
-            Logs.WriteLogEnd();
         }
 
         private void Net_Button_CardFresh_Click(object sender, EventArgs e)
@@ -228,6 +253,7 @@ namespace ClassManager_StudentCrack
             if (e.KeyChar == '\r')
             {
                 // 按下 Enter 键
+
             }
         }
 

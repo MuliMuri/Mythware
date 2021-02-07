@@ -1,9 +1,10 @@
-﻿using System.Runtime.InteropServices;
-using System.Net.NetworkInformation;
+﻿using System.Net.NetworkInformation;
 using Microsoft.Win32;
-using System.Text;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
 
 namespace ClassManager_StudentCrack._NetWork
 {
@@ -99,6 +100,119 @@ namespace ClassManager_StudentCrack._NetWork
                 return false;
                 throw;
             }
+        }
+
+        /// <summary>
+        /// 获取ARP查询字符串
+        /// </summary>
+        /// <returns></returns>
+        private static string GetARPResult()
+        {
+            Process p = null;
+            string output = string.Empty;
+            try
+            {
+                p = Process.Start(new ProcessStartInfo("arp", "-a")
+                {
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true
+                });
+                output = p.StandardOutput.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IPInfo: Error Retrieving 'arp -a' Results", ex);
+            }
+            finally
+            {
+                if (p != null)
+                {
+                    p.Close();
+                }
+            }
+            return output;
+        }
+
+
+        /// <summary>
+        /// 获取IP地址与Mac地址对应数据表
+        /// </summary>
+        /// <returns>Mac-IP</returns>
+        public static List<string[]> GetIPInfo()
+        {
+            try
+            {
+                var list = new List<string[]>();
+                foreach (var arp in GetARPResult().Split(new char[] { '\n', '\r' }))
+                {
+                    if (!string.IsNullOrEmpty(arp))
+                    {
+                        var pieces = (from piece in arp.Split(new char[] { ' ', '\t' })
+                                      where !string.IsNullOrEmpty(piece)
+                                      select piece).ToArray();
+                        if (pieces.Length == 3)
+                        {
+                            //pieces[1]Mac
+                            //pieces[0]IP
+                            list.Add(new string[2] { pieces[1], pieces[0] });
+                        }
+                    }
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IPInfo: Error Parsing 'arp -a' results", ex);
+            }
+        }
+
+        /// <summary>
+        /// Mac地址转换为IP地址
+        /// </summary>
+        /// <param name="str">IP</param>
+        /// <returns></returns>
+        public static string GetIpFromMac(string str)
+        {
+            str = str.Trim().ToString().Replace(":", "-");
+            var ipinfo = (from ip in GetIPInfo()
+                          where ip[0].ToLowerInvariant() == str.ToLowerInvariant()
+                          select ip[1]).FirstOrDefault();
+            return ipinfo;
+        }
+
+
+        /// <summary>
+        /// 获取本机所有ip地址
+        /// </summary>
+        /// <param name="netType">"InterNetwork":ipv4地址，"InterNetworkV6":ipv6地址</param>
+        /// <returns>ip地址集合</returns>
+        public static List<string> GetLocalIpAddress(string netType)
+        {
+            string hostName = Dns.GetHostName();                    //获取主机名称
+            IPAddress[] addresses = Dns.GetHostAddresses(hostName); //解析主机IP地址
+
+            List<string> IPList = new List<string>();
+            if (netType == string.Empty)
+            {
+                for (int i = 0; i < addresses.Length; i++)
+                {
+                    IPList.Add(addresses[i].ToString());
+                }
+            }
+            else
+            {
+                //AddressFamily.InterNetwork表示此IP为IPv4,
+                //AddressFamily.InterNetworkV6表示此地址为IPv6类型
+                for (int i = 0; i < addresses.Length; i++)
+                {
+                    if (addresses[i].AddressFamily.ToString() == netType)
+                    {
+                        IPList.Add(addresses[i].ToString());
+                    }
+                }
+            }
+            return IPList;
         }
     }
 }

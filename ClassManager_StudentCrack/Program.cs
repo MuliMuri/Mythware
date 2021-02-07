@@ -16,6 +16,9 @@ namespace ClassManager_StudentCrack
         [STAThread]
         static void Main()
         {
+            // List<string> a = NetWork.GetLocalIpAddress("InterNetwork");
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

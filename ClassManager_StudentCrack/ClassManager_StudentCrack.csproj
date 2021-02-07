@@ -64,9 +64,11 @@
     <Compile Include="Chat\Template\Reply.Designer.cs">
       <DependentUpon>Reply.cs</DependentUpon>
     </Compile>
+    <Compile Include="CMD\CMD.cs" />
     <Compile Include="Function\HotKeys.cs" />
     <Compile Include="Function\Logs.cs" />
     <Compile Include="Function\MemCore.cs" />
+    <Compile Include="Function\Window.cs" />
     <Compile Include="Init\Infos.cs" />
     <Compile Include="Init\Init.cs" />
     <Compile Include="MainForm.cs">
