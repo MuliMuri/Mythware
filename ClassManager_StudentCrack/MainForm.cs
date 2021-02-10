@@ -10,6 +10,7 @@ using ClassManager_StudentCrack._Function;
 using ClassManager_StudentCrack._Init;
 using ClassManager_StudentCrack._NetWork;
 using ClassManager_StudentCrack._CmdBox;
+using ClassManager_StudentCrack._Chat;
 
 namespace ClassManager_StudentCrack
 {
@@ -150,7 +151,7 @@ namespace ClassManager_StudentCrack
         {
             Net_ComboBox_Card.Items.Clear();
             // TODO: 更新获取网卡函数
-            if (NetWork.GetNetWorkCard(out CardInfos))
+            if (NetInfo.GetNetWorkCard(out CardInfos))
             {
                 // True
                 for (int i = 0; i < CardInfos.Count; i++)
@@ -176,7 +177,9 @@ namespace ClassManager_StudentCrack
 
         private void Net_ComboBox_Card_SelectedValueChanged(object sender, EventArgs e)
         {
-            Net_Label_IPPart.Text = CardInfos[Net_ComboBox_Card.SelectedIndex]["IP"];
+            List<string> IPInfo = NetInfo.GetIPInfo(CardInfos[Net_ComboBox_Card.SelectedIndex]["IP"], CardInfos[Net_ComboBox_Card.SelectedIndex]["Mask"]);
+
+            Net_Label_IPPart.Text = string.Format("{0}--{1}", IPInfo[0], IPInfo[1]);
             Net_Label_IPMask.Text = CardInfos[Net_ComboBox_Card.SelectedIndex]["Mask"];
         }
 
@@ -221,6 +224,19 @@ namespace ClassManager_StudentCrack
         private void Chat_Button_Send_Click(object sender, EventArgs e)
         {
             // TODO: 发送信息 函数
+            if (Chat_TextBox_Input.Text == "")
+            {
+                MessageBox.Show("不能发送空信息", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (Chat.SendMsg(Chat_TextBox_Input.Text, "172.168.214.2"))
+            {
+                Chat_TextBox_Input.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("内部错误", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void RunState_Button_StateFresh_Click(object sender, EventArgs e)

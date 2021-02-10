@@ -8,7 +8,7 @@ using System.Net;
 
 namespace ClassManager_StudentCrack._NetWork
 {
-    class NetWork
+    class NetInfo
     {
 
         /// <summary>
@@ -25,6 +25,7 @@ namespace ClassManager_StudentCrack._NetWork
                 NetworkInterface[] _networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
                 foreach (NetworkInterface Adapter in _networkInterfaces)
                 {
+                    
                     #region NetCardType
                     string CardType = "未知网卡";   // 初始化默认网卡类型
                     string CardRegKey = string.Format(@"SYSTEM\CurrentControlSet\Control\Network\{{4D36E972-E325-11CE-BFC1-08002BE10318}}\{0}\Connection", Adapter.Id);
@@ -36,7 +37,7 @@ namespace ClassManager_StudentCrack._NetWork
                         int MediaSubType = int.Parse(RegKey.GetValue("MediaSubType", 0).ToString());
 
                         // PnpInstanceID 前3位带 PCI 即为物理网卡
-                        if (PnpInstanceID.Length > 3 && PnpInstanceID.Substring(0, 3) == "PCI")
+                        if (PnpInstanceID.Length > 3 && PnpInstanceID.Substring(0, 3) == "PCI" | PnpInstanceID.Substring(0,3) == "USB")
                         {
                             CardType = "物理网卡";
                         }
@@ -213,6 +214,52 @@ namespace ClassManager_StudentCrack._NetWork
                 }
             }
             return IPList;
+        }
+
+
+        /// <summary>
+        /// 计算IP广播地址
+        /// </summary>
+        /// <param name="IP">网段内IP</param>
+        /// <param name="Mask">对应掩码</param>
+        /// <returns>[StartIP, StopIP, UsableIPNum]</returns>
+        public static List<string> GetIPInfo(string IP, string Mask)
+        {
+            byte[] ByteIP = IPAddress.Parse(IP).GetAddressBytes();
+            byte[] ByteMask = IPAddress.Parse(Mask).GetAddressBytes();
+           
+            List<string> Pack = new List<string>();
+            byte[] StartIP = new byte[4];
+            byte[] StopIP = new byte[4];
+            int TotalBits = 0;
+
+            // 网关地址/起始地址 = IP & Mask
+            for (int i = 0; i < ByteIP.Length; i++)
+            {
+                StartIP[i] = (byte)(ByteIP[i] & ByteMask[i]);
+            }
+            // 广播地址/终止地址 = IP | (~Mask)
+            for (int i = 0; i < ByteIP.Length; i++)
+            {
+                StopIP[i] = (byte)((ByteIP[i] | ~ByteMask[i]));
+            }
+            // 可用IP = (2^掩码 0的位数) - 2(网关 + 广播地址)
+            for (int i = 0; i < ByteMask.Length; i++)
+            {
+                while (ByteMask[i] != 0)
+                {
+                    TotalBits++;
+                    ByteMask[i] <<= 1;
+                }
+            }
+            TotalBits = 32 - TotalBits; // 换算0的位数
+
+
+            Pack.Add(new IPAddress(StartIP).ToString());
+            Pack.Add(new IPAddress(StopIP).ToString());
+            Pack.Add((Math.Pow(2,TotalBits) - 2).ToString());
+
+            return Pack;
         }
     }
 }
