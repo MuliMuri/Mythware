@@ -99,7 +99,7 @@ namespace ClassManager_StudentCrack._Function
                         // 发送热键
                         // MessageBox.Show("send");
 
-                        // TODO: 发送信息 函数
+                        // TODO: 可选 发送信息热键
                     }
                 }
             }

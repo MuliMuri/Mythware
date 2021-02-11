@@ -218,18 +218,17 @@ namespace ClassManager_StudentCrack
 
         private void TextBox_ChatInput_KeyDown(object sender, KeyEventArgs e)
         {
-            HotKeys.Form.Chat.Key_SendMsg(e);
+            // HotKeys.Form.Chat.Key_SendMsg(e);
         }
 
         private void Chat_Button_Send_Click(object sender, EventArgs e)
         {
-            // TODO: 发送信息 函数
             if (Chat_TextBox_Input.Text == "")
             {
                 MessageBox.Show("不能发送空信息", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (Chat.SendMsg(Chat_TextBox_Input.Text, "172.168.214.2"))
+            if (Chat.SendMsg(Chat_TextBox_Input.Text, "172.168.214.2"))// TODO: 更换IP
             {
                 Chat_TextBox_Input.Text = "";
             }
