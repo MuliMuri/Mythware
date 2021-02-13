@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 
 using ClassManager_StudentCrack._Function;
+using ClassManager_StudentCrack._NetWork;
 
 namespace ClassManager_StudentCrack._Chat
 {
@@ -141,11 +142,15 @@ namespace ClassManager_StudentCrack._Chat
             0x58, 0x50
         };
         
+        /// <summary>
+        /// 添加16位随机Hex
+        /// </summary>
+        /// <param name="IntArray"></param>
+        /// <returns></returns>
         private static List<int> AddRandomHex(List<int> IntArray)
         {
-            int[] Random = { 0 };
+            int[] Random = Crypto.MyRandom.Get32RandomNum();
 
-            Random = Crypto.MyRandom.Get32RandomNum();
             for (int i = 0; i < Random.Length; i++)
             {
                 IntArray[12 + i] = Random[i];
@@ -175,10 +180,11 @@ namespace ClassManager_StudentCrack._Chat
         /// <param name="Ip">对方IP</param>
         /// <param name="Port">端口号，默认4705</param>
         /// <returns>BOOL</returns>
-        public static bool SendMsg(string Msg, string Ip, int Port=4705)
-        {
+        public static bool SendMsg(string Msg, string IP, int Port=4705)
+        {// TODO: 参数变数组
             byte[] ChatByte = new byte[954];
             List<int> ChatData = ChatIntArray;
+            NetSocket.Chat chat = new NetSocket.Chat(IP, Port);
 
             ChatData = AddRandomHex(ChatData);  // 添加16位随机Hex
             ChatData = FormatString(ChatData, Msg);  // String转HEX
@@ -188,9 +194,7 @@ namespace ClassManager_StudentCrack._Chat
             }
             try
             {
-                IPEndPoint IPEnd = new IPEndPoint(IPAddress.Parse(Ip), Port);
-                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                socket.SendTo(ChatByte, ChatData.Count, SocketFlags.None, IPEnd);
+                chat.MsgSend(ChatByte);
             }
             catch (Exception)
             {

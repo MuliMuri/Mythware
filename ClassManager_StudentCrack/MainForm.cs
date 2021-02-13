@@ -195,8 +195,7 @@ namespace ClassManager_StudentCrack
 
             // 更新 双端 信息
 
-            // TODO: LocalIP获取
-            // RunState_TextBox_LocalIP.Text = Infos.LocalIP;
+            RunState_TextBox_LocalIP.Text = Infos.NetWork.LocalIP;
 
             // 检测运行状态
             
