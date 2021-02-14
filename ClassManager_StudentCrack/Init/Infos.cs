@@ -163,7 +163,7 @@ namespace ClassManager_StudentCrack._Init
 
 
 
-            public static string LocalIP { get; } = GetSpecUDPConnection(Init.ProcessID)[0].LocalAddress.ToString();
+            public static string LocalIP { get; } = GetSpecUDPConnection(Process.GetProcessesByName("System")[0].Id)[0].LocalAddress.ToString();
         }
     }
 }

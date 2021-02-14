@@ -13,12 +13,6 @@ namespace ClassManager_StudentCrack._Init
     class Init
     {
         /// <summary>
-        /// 极域电子教室 进程PID
-        /// </summary>
-        public static int ProcessID { get; set; }
-
-
-        /// <summary>
         /// 初始化日志线程
         /// </summary>
         /// <param name="textBox">TextBox 对象实例</param>
@@ -37,11 +31,10 @@ namespace ClassManager_StudentCrack._Init
         /// <returns>BOOL</returns>
         public static bool GetMythwareRunState()
         {
-            if (Process.GetProcessesByName("StudentMain").Length != 0)
-            {
+            if (Process.GetProcessesByName("StudentMain").Length == 0)
+                return false;
 
-            }
-            return false;
+            return true;
         }
     }
 }

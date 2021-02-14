@@ -44,6 +44,8 @@ namespace ClassManager_StudentCrack
             // ipArray = Dns.GetHostAddresses(Dns.GetHostName());
             // IPAddress localIp = ipArray.First(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
             // Infos.NetWork.Test();
+            // string a = Infos.NetWork.LocalIP;
+            // DisMytServer.Test();
         }
     }
 }

@@ -9,10 +9,12 @@ namespace ClassManager_StudentCrack._Function
 {
     class Window
     {
+        public bool IsTop { get; set; } = true;
+
         /// <summary>
         /// 窗口样式类
         /// </summary>
-        public class WndStyle
+        private class WndStyle
         {
             public static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
             public static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
@@ -22,7 +24,7 @@ namespace ClassManager_StudentCrack._Function
         }
 
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
-        public static extern bool SetWindowPos(
+        private static extern bool SetWindowPos(
             IntPtr hWnd,
             IntPtr hWndInsertAfter,
             int X,
@@ -31,5 +33,24 @@ namespace ClassManager_StudentCrack._Function
             int cy,
             uint uFlags
             );
+
+        /// <summary>
+        /// 设置窗口样式
+        /// </summary>
+        /// <param name="Handle">窗口句柄</param>
+        public void SetWindow(IntPtr Handle)
+        {
+            if (IsTop)
+            {
+                // 设置窗口置顶
+                SetWindowPos(Handle, WndStyle.HWND_TOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001);
+            }
+            else if (!IsTop)
+            {
+                // 取消窗口置顶
+                SetWindowPos(Handle, WndStyle.HWND_NOTOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001);
+            }
+            return;
+        }
     }
 }

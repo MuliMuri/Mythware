@@ -182,7 +182,7 @@ namespace ClassManager_StudentCrack._Chat
         /// <returns>BOOL</returns>
         public static bool SendMsg(string Msg, string IP, int Port=4705)
         {// TODO: 参数变数组
-            byte[] ChatByte = new byte[954];
+            byte[] ChatByte = new byte[ChatIntArray.Count];
             List<int> ChatData = ChatIntArray;
             NetSocket.Chat chat = new NetSocket.Chat(IP, Port);
 

@@ -19,6 +19,7 @@ namespace ClassManager_StudentCrack
         // 局部变量声明
         private bool MythwareState;
         private List<Dictionary<string, string>> CardInfos;
+        private Window window = new Window();
 
         private Thread _MainLog;
 
@@ -38,7 +39,10 @@ namespace ClassManager_StudentCrack
                         // 窗口置顶ID
                         case HotKeys.Global.HotKeyIDs.WindowTop:
                             WindowState = FormWindowState.Normal;
-                            Window.SetWindowPos(Handle, Window.WndStyle.HWND_TOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001);
+
+                            window.IsTop = true;
+                            window.SetWindow(Handle);
+                            
                             MainWin_CheckBox_TopWindow.Checked = true;
                             // MessageBox.Show("Ctrl + Alt + Shift + O");
                             break;
@@ -76,10 +80,6 @@ namespace ClassManager_StudentCrack
         public MainForm()
         {
             InitializeComponent();
-            // Chat.SaveChatEXE.CreateCodeEXE();
-            // TopMost = true;
-            //Window.SetWindowPos(Handle, Window.WndStyle.HWND_TOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001); // 设置窗口置顶
-
             _MainLog = Init.SetLogClass(MainWin_TextBox_Log); // 初始化 日志线程 实例
         }
 
@@ -99,17 +99,22 @@ namespace ClassManager_StudentCrack
                     "警告",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning,
-                    MessageBoxDefaultButton.Button2);
+                    MessageBoxDefaultButton.Button2
+                    );
 
                 if (result == DialogResult.Yes)
                 {
-                    Window.SetWindowPos(Handle, Window.WndStyle.HWND_NOTOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001);
+                    window.IsTop = false;
                     // TODO：日志
                 }
                 else
                 {
                     MainWin_CheckBox_TopWindow.CheckState = CheckState.Checked;
                 }
+            }
+            else
+            {
+                window.IsTop = true;
             }
         }
 
@@ -190,15 +195,16 @@ namespace ClassManager_StudentCrack
 
         private void Timer_GetSystemTime_Tick(object sender, EventArgs e)
         {
+            // 设置窗口样式
+            window.SetWindow(Handle);
+
             // 更新标签时钟
             MainWin_Label_Time.Text = DateTime.Now.ToLocalTime().ToString();
 
-            // 更新 双端 信息
-
+            // 更新双端信息
             RunState_TextBox_LocalIP.Text = Infos.NetWork.LocalIP;
 
             // 检测运行状态
-            
             if (!MythwareState) // false 启动获取
             {
                 MythwareState = Init.GetMythwareRunState();
