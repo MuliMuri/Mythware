@@ -32,6 +32,10 @@ namespace ClassManager_StudentCrack
         private void LoadString()
         {
             FuncTexts[0] = Properties.Resources.ScreenShow_Str;
+            FuncTexts[1] = Properties.Resources.StdShow_Str;
+            FuncTexts[2] = Properties.Resources.NetCinema_Str;
+            FuncTexts[3] = Properties.Resources.NetVideo_Str;
+            FuncTexts[4] = Properties.Resources.WhiteBoard_Str;
         }
 
         private string MakeString()

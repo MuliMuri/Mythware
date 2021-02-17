@@ -92,6 +92,9 @@ namespace ClassManager_StudentCrack._Function
         [DllImport("user32.dll", EntryPoint = "IsIconic")]
         private static extern bool IsIconic(IntPtr hWnd);
 
+        // [DllImport("Kernel32.dll", EntryPoint = "GetLastError")]
+        // private static extern int GetLastError();
+
         #endregion
 
         /// <summary>
@@ -115,7 +118,8 @@ namespace ClassManager_StudentCrack._Function
 
         public bool CheckMythwareWindow()
         {
-            // HMytWnds[0] = FindWindow("notepad", null);
+            // HMytWnds[2] = FindWindow("notepad", null);
+
             HMytWnds[0] = FindWindow(null, "屏幕广播");
             HMytWnds[1] = FindWindow(null, "学生演示");
             HMytWnds[2] = FindWindow(null, "网络影院");
@@ -153,14 +157,15 @@ namespace ClassManager_StudentCrack._Function
         {
             for (int i = 0; i < InceptMytwnds.Count; i++)
             {
-                SetWindowPos(HMytWnds[i], WndStyle.HWND_BOTTOM, 0, 0, 0, 0, SWPs.SWP_NOMOVE | SWPs.SWP_NOSIZE | SWPs.SWP_NOSENDCHANGING);
-                ShowWindow(HMytWnds[i], SWs.SW_FORCEMINIMIZE);
+                SetWindowPos(HMytWnds[InceptMytwnds[i]], WndStyle.HWND_NOTOPMOST, 0, 0, 0, 0, SWPs.SWP_NOMOVE | SWPs.SWP_NOSIZE | SWPs.SWP_NOSENDCHANGING);
+                ShowWindow(HMytWnds[InceptMytwnds[i]], SWs.SW_FORCEMINIMIZE);
             }
 
             // 重置标志位
             IsDialog = false;
             RunMytWnds.Clear();
             InceptMytwnds.Clear();
+            HMytWnds = new IntPtr[5];
         }
     }
 }

@@ -71,12 +71,30 @@ namespace ClassManager_StudentCrack.Properties {
         }
         
         /// <summary>
+        ///   查找类似 网络影院-教师可以在自己的计算机上播放媒体档案，并将播放的媒体文件广播至整个教室。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。 的本地化字符串。
+        /// </summary>
+        internal static string NetCinema_Str {
+            get {
+                return ResourceManager.GetString("NetCinema_Str", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Bitmap NetVideo_Img {
             get {
                 object obj = ResourceManager.GetObject("NetVideo_Img", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 视频直播-教师直播自身USB摄像头的画面至多个学生。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。 的本地化字符串。
+        /// </summary>
+        internal static string NetVideo_Str {
+            get {
+                return ResourceManager.GetString("NetVideo_Str", resourceCulture);
             }
         }
         
@@ -91,7 +109,7 @@ namespace ClassManager_StudentCrack.Properties {
         }
         
         /// <summary>
-        ///   查找类似 屏幕广播-教师可以在全屏或窗口模式下广播教师端屏幕至学生端屏幕。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整广播窗口。 的本地化字符串。
+        ///   查找类似 屏幕广播-教师可以在全屏或窗口模式下广播教师端屏幕至学生端屏幕。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。 的本地化字符串。
         /// </summary>
         internal static string ScreenShow_Str {
             get {
@@ -110,12 +128,30 @@ namespace ClassManager_StudentCrack.Properties {
         }
         
         /// <summary>
+        ///   查找类似 学生演示-教师选择一名学生向指定学生组转播画面。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。 的本地化字符串。
+        /// </summary>
+        internal static string StdShow_Str {
+            get {
+                return ResourceManager.GetString("StdShow_Str", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Bitmap WhiteBoard_Img {
             get {
                 object obj = ResourceManager.GetObject("WhiteBoard_Img", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 共享白板-教师通过将画布共享给学生的方式，邀请学生一起作画。共享白板功能提供了丰富多彩的绘制工具，帮助教师和学生进行共同创作。学生也可以进行独立绘制，教师可以监看每个学生的绘制画面，并选择学生将他的画面演示给其他学生。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。 的本地化字符串。
+        /// </summary>
+        internal static string WhiteBoard_Str {
+            get {
+                return ResourceManager.GetString("WhiteBoard_Str", resourceCulture);
             }
         }
     }

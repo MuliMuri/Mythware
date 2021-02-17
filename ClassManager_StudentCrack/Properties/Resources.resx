@@ -121,20 +121,32 @@
   <data name="NetCinema_Img" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NetCinema.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="NetCinema_Str" xml:space="preserve">
+    <value>网络影院-教师可以在自己的计算机上播放媒体档案，并将播放的媒体文件广播至整个教室。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。</value>
+  </data>
   <data name="NetVideo_Img" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NetVideo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NetVideo_Str" xml:space="preserve">
+    <value>视频直播-教师直播自身USB摄像头的画面至多个学生。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。</value>
   </data>
   <data name="ScreenShow_Img" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ScreenShow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ScreenShow_Str" xml:space="preserve">
-    <value>屏幕广播-教师可以在全屏或窗口模式下广播教师端屏幕至学生端屏幕。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整广播窗口。</value>
+    <value>屏幕广播-教师可以在全屏或窗口模式下广播教师端屏幕至学生端屏幕。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。</value>
     <comment>"+~"表换行</comment>
   </data>
   <data name="StdShow_Img" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StdShow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="StdShow_Str" xml:space="preserve">
+    <value>学生演示-教师选择一名学生向指定学生组转播画面。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。</value>
+  </data>
   <data name="WhiteBoard_Img" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WhiteBoard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WhiteBoard_Str" xml:space="preserve">
+    <value>共享白板-教师通过将画布共享给学生的方式，邀请学生一起作画。共享白板功能提供了丰富多彩的绘制工具，帮助教师和学生进行共同创作。学生也可以进行独立绘制，教师可以监看每个学生的绘制画面，并选择学生将他的画面演示给其他学生。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整窗口。</value>
   </data>
 </root>

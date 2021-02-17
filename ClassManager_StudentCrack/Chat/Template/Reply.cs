@@ -16,5 +16,10 @@ namespace ClassManager_StudentCrack._Chat.Template
         {
             InitializeComponent();
         }
+
+        private void Reply_Button_Send_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -59,6 +59,7 @@ namespace ClassManager_StudentCrack._Chat.Template
             this.Reply_Button_Send.TabIndex = 2;
             this.Reply_Button_Send.Text = "发送";
             this.Reply_Button_Send.UseVisualStyleBackColor = true;
+            this.Reply_Button_Send.Click += new System.EventHandler(this.Reply_Button_Send_Click);
             // 
             // label1
             // 
