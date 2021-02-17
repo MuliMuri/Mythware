@@ -72,6 +72,12 @@
     <Compile Include="Function\Window.cs" />
     <Compile Include="Init\Infos.cs" />
     <Compile Include="Init\Init.cs" />
+    <Compile Include="Intercept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Intercept.Designer.cs">
+      <DependentUpon>Intercept.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     <EmbeddedResource Include="Chat\Template\Reply.resx">
       <DependentUpon>Reply.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Intercept.resx">
+      <DependentUpon>Intercept.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -114,6 +123,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NetCinema.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NetVideo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ScreenShow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StdShow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WhiteBoard.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

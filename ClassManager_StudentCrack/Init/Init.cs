@@ -33,7 +33,6 @@ namespace ClassManager_StudentCrack._Init
         {
             if (Process.GetProcessesByName("StudentMain").Length == 0)
                 return false;
-
             return true;
         }
     }

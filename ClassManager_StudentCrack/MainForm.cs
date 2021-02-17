@@ -16,12 +16,13 @@ namespace ClassManager_StudentCrack
 {
     public partial class MainForm : Form
     {
-        // 局部变量声明
+        public bool IsIntercept;
+        public int MytWndIndex;
+
         private bool MythwareState;
         private List<Dictionary<string, string>> CardInfos;
         private Window window = new Window();
-
-        private Thread _MainLog;
+        private int InceptWndCount = 0;                         // 拦截对话框计数
 
         #region 重写WndProc
         private const int WM_HOTKEY = 0x312;    //窗口消息-热键
@@ -41,7 +42,6 @@ namespace ClassManager_StudentCrack
                             WindowState = FormWindowState.Normal;
 
                             window.IsTop = true;
-                            window.SetWindow(Handle);
                             
                             MainWin_CheckBox_TopWindow.Checked = true;
                             // MessageBox.Show("Ctrl + Alt + Shift + O");
@@ -80,10 +80,54 @@ namespace ClassManager_StudentCrack
         public MainForm()
         {
             InitializeComponent();
-            _MainLog = Init.SetLogClass(MainWin_TextBox_Log); // 初始化 日志线程 实例
+            //window.SetMyWindow(Handle);
         }
 
         // TODO: 日志类
+
+
+        private void MythwareWindowRun()
+        {
+            // 挂起极域进程
+            MemCore.ProcessManager.SuspendProcess(Process.GetProcessesByName("StudentMain")[0].Id);
+            for (int i = 0; i < window.RunMytWnds.Count; i++)
+            {
+                Intercept intercept = new Intercept(window.RunMytWnds[i]);
+                intercept.FormClosed += InterceptFormClosed;
+                intercept.Show(this);
+                InceptWndCount ++;
+            }
+        }
+
+        private void InterceptFormClosed(object sender, FormClosedEventArgs e)
+        {
+            InceptWndCount --;
+            if (IsIntercept)
+            {
+                // 需要拦截
+                window.InceptMytwnds.Add(MytWndIndex);
+            }
+            else
+            {
+                // 加入单次允许白名单
+                window.AllowMytwnds.Add(MytWndIndex);
+            }
+
+            // 全部选择完再处理
+            if (InceptWndCount == 0)
+            {
+                // 释放极域进程
+                MemCore.ProcessManager.ResumeProcess(Process.GetProcessesByName("StudentMain")[0].Id);
+
+                window.SetMythwareWindow();
+            }
+        }
+
+
+
+
+
+
 
         private void ToolStripMenuItem_LogTextBox_Clear_Click(object sender, EventArgs e)
         {
@@ -92,7 +136,7 @@ namespace ClassManager_StudentCrack
 
         private void CheckBox_TopWindow_CheckStateChanged(object sender, EventArgs e)
         {
-            if (MainWin_CheckBox_TopWindow.CheckState == CheckState.Unchecked)
+            if (!MainWin_CheckBox_TopWindow.Checked)
             {
                 DialogResult result = MessageBox.Show(
                     "确定取消窗口置顶？\n注：取消后若被教师广播，可使用快捷键 Ctrl+Alt+Shift+O 重新置顶",
@@ -109,7 +153,7 @@ namespace ClassManager_StudentCrack
                 }
                 else
                 {
-                    MainWin_CheckBox_TopWindow.CheckState = CheckState.Checked;
+                    MainWin_CheckBox_TopWindow.Checked = true;
                 }
             }
             else
@@ -195,8 +239,24 @@ namespace ClassManager_StudentCrack
 
         private void Timer_GetSystemTime_Tick(object sender, EventArgs e)
         {
-            // 设置窗口样式
-            window.SetWindow(Handle);
+            // 判断窗口状态
+            if (window.IsTop != window.LastIsTop)
+            {
+                // 切换
+                window.SetMyWindow(Handle);
+                window.LastIsTop = window.IsTop;
+            }
+
+            // 检测极域窗口
+            if(window.CheckMythwareWindow())
+            {
+                if (!window.IsDialog)
+                {
+                    // 防止多次弹窗鬼畜
+                    window.IsDialog = true;
+                    MythwareWindowRun();
+                }
+            }
 
             // 更新标签时钟
             MainWin_Label_Time.Text = DateTime.Now.ToLocalTime().ToString();

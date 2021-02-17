@@ -46,6 +46,7 @@ namespace ClassManager_StudentCrack
             // Infos.NetWork.Test();
             // string a = Infos.NetWork.LocalIP;
             // DisMytServer.Test();
+            // Window.SetMythwareWindow();
         }
     }
 }

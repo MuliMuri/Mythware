@@ -59,5 +59,64 @@ namespace ClassManager_StudentCrack.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap NetCinema_Img {
+            get {
+                object obj = ResourceManager.GetObject("NetCinema_Img", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap NetVideo_Img {
+            get {
+                object obj = ResourceManager.GetObject("NetVideo_Img", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap ScreenShow_Img {
+            get {
+                object obj = ResourceManager.GetObject("ScreenShow_Img", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 屏幕广播-教师可以在全屏或窗口模式下广播教师端屏幕至学生端屏幕。+~+~全屏模式：若教师启用全屏，则学生无法退出全屏。+~窗口模式：学生可以自由调整广播窗口。 的本地化字符串。
+        /// </summary>
+        internal static string ScreenShow_Str {
+            get {
+                return ResourceManager.GetString("ScreenShow_Str", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap StdShow_Img {
+            get {
+                object obj = ResourceManager.GetObject("StdShow_Img", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap WhiteBoard_Img {
+            get {
+                object obj = ResourceManager.GetObject("WhiteBoard_Img", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

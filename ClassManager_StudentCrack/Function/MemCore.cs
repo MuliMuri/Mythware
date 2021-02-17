@@ -99,10 +99,7 @@ namespace ClassManager_StudentCrack._Function
             private static extern uint NtSuspendProcess([In] IntPtr processHandle);
 
             [DllImport("kernel32.dll", SetLastError = true)]
-            private static extern IntPtr OpenProcess(
-                ProcessAccess desiredAccess,
-                bool inheritHandle,
-                int processId);
+            private static extern IntPtr OpenProcess(ProcessAccess desiredAccess, bool inheritHandle, int processId);
 
             [DllImport("kernel32.dll", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
