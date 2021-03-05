@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ClassManager_StudentCrack._Function;
+using ClassManager_StudentCrack._Module;
 
 namespace ClassManager_StudentCrack
 {

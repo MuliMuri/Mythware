@@ -70,8 +70,8 @@
     <Compile Include="Function\Crypto.cs" />
     <Compile Include="Function\HotKeys.cs" />
     <Compile Include="Function\Logs.cs" />
-    <Compile Include="Function\MemCore.cs" />
-    <Compile Include="Function\Window.cs" />
+    <Compile Include="Module\MemCore.cs" />
+    <Compile Include="Module\Window.cs" />
     <Compile Include="Init\Infos.cs" />
     <Compile Include="Init\Init.cs" />
     <Compile Include="Intercept.cs">

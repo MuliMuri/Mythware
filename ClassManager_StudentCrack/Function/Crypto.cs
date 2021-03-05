@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClassManager_StudentCrack._Function
 {
-    class Crypto
+    internal class Crypto
     {
         public static class MyRandom
         {

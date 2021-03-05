@@ -7,7 +7,7 @@ namespace ClassManager_StudentCrack._Function
     /// <summary>
     /// 热键定义
     /// </summary>
-    class HotKeys
+    internal class HotKeys
     {
         // 全局热键
         public class Global
@@ -23,7 +23,7 @@ namespace ClassManager_StudentCrack._Function
                 Win = 8,
             }
 
-            // 全局热键表
+            // 全局自定义热键表
             public class HotKeyIDs
             {
                 public const int WindowTop = 1000;

@@ -8,8 +8,10 @@ using ClassManager_StudentCrack._NetWork;
 using ClassManager_StudentCrack._Function;
 using ClassManager_StudentCrack._Chat;
 using ClassManager_StudentCrack._Init;
+using ClassManager_StudentCrack._Module;
 
 using System.Net;
+using System.Diagnostics;
 
 namespace ClassManager_StudentCrack
 {
@@ -25,6 +27,11 @@ namespace ClassManager_StudentCrack
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+        }
+
+        static void asd()
+        {
+            MessageBox.Show("ok");
         }
 
         static void Test()
@@ -47,6 +54,17 @@ namespace ClassManager_StudentCrack
             // string a = Infos.NetWork.LocalIP;
             // DisMytServer.Test();
             // Window.SetMythwareWindow();
+            // Process.GetProcessById(4);
+            // MemCore.ProcessManager a = new MemCore.ProcessManager();
+            // a.Add("Notepad");
+            // a.Remove("a");
+            // Window.WindowManager windowManager = new Window.WindowManager();
+            // windowManager.Add("任务管理器");
+            // windowManager.Add(null, null, default);
+            // windowManager.Add(null, null, new IntPtr(0x00180CE8));
+            // MemCore.ThreadManager threadManager = new MemCore.ThreadManager();
+            // asd();
+            // threadManager.Add("a", asd);
         }
     }
 }

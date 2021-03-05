@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClassManager_StudentCrack._CmdBox
+﻿namespace ClassManager_StudentCrack._CmdBox
 {
-    class CodBox
+    internal class CodBox
     {
         private static class CmdSetting
         {

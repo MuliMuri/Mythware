@@ -5,7 +5,7 @@ namespace ClassManager_StudentCrack._Function
     /// <summary>
     /// 日志类定义
     /// </summary>
-    class Logs
+    internal class Logs
     {
         public TextBox TextBox { get; set; }
         public Logs(TextBox textBox)
@@ -13,7 +13,7 @@ namespace ClassManager_StudentCrack._Function
             TextBox = textBox;
         }
 
-        delegate void WriteLogCallback(object log);
+        private delegate void WriteLogCallback(object log);
         /// <summary>
         /// 写入日志
         /// </summary>

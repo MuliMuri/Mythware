@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Sockets;
-using System.Net;
-
-using ClassManager_StudentCrack._Function;
+﻿using ClassManager_StudentCrack._Function;
 using ClassManager_StudentCrack._NetWork;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ClassManager_StudentCrack._Chat
 {
-    class Chat
+    internal class Chat
     {
         private static List<int> ChatIntArray = new List<int>()
         {

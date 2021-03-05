@@ -1057,19 +1057,19 @@ namespace ClassManager_StudentCrack
             this.ToolStripMenuItem_LogTextBox_Clear,
             this.ToolStripMenuItem_LogTextBox_ExpLog});
             this.RightClick_ContextMenuStrip_LogTextBox.Name = "ContextMenuStrip_LogTextBox";
-            this.RightClick_ContextMenuStrip_LogTextBox.Size = new System.Drawing.Size(125, 48);
+            this.RightClick_ContextMenuStrip_LogTextBox.Size = new System.Drawing.Size(181, 70);
             // 
             // ToolStripMenuItem_LogTextBox_Clear
             // 
             this.ToolStripMenuItem_LogTextBox_Clear.Name = "ToolStripMenuItem_LogTextBox_Clear";
-            this.ToolStripMenuItem_LogTextBox_Clear.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItem_LogTextBox_Clear.Size = new System.Drawing.Size(180, 22);
             this.ToolStripMenuItem_LogTextBox_Clear.Text = "清空";
             this.ToolStripMenuItem_LogTextBox_Clear.Click += new System.EventHandler(this.ToolStripMenuItem_LogTextBox_Clear_Click);
             // 
             // ToolStripMenuItem_LogTextBox_ExpLog
             // 
             this.ToolStripMenuItem_LogTextBox_ExpLog.Name = "ToolStripMenuItem_LogTextBox_ExpLog";
-            this.ToolStripMenuItem_LogTextBox_ExpLog.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItem_LogTextBox_ExpLog.Size = new System.Drawing.Size(180, 22);
             this.ToolStripMenuItem_LogTextBox_ExpLog.Text = "导出日志";
             // 
             // MainWin_MenuStrip
