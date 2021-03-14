@@ -6,21 +6,11 @@ using System.Threading;
 
 namespace ClassManager_StudentCrack._Module
 {
-    class MemCore
+    class TaskCore
     {
         //TODO: ?-重名多进程管理
-
-        //TODO: 定时刷新
-        [DllImport("kernel32.dll")]
-        private static extern uint GetTickCount();
-        private static void Delay(uint ms)
-        {
-            uint start = GetTickCount();
-            while (GetTickCount() - start < ms)
-            {
-                System.Windows.Forms.Application.DoEvents();
-            }
-        }
+        //TODO: for循环List列表
+        //TODO: 封装常用函数
 
 
         /// <summary>
@@ -31,7 +21,7 @@ namespace ClassManager_StudentCrack._Module
             public ProcessManager()
             {
                 ThreadManager threadManager = new ThreadManager();
-                threadManager.Add("CheckLive", CheckLive);
+                threadManager.Add("ProcessManager_CheckLive", CheckLive, IsBackGround:true);
             }
 
 
@@ -50,7 +40,7 @@ namespace ClassManager_StudentCrack._Module
             /// <summary>
             /// 进程表
             /// </summary>
-            Dictionary<string, ProcInfoTab> ProcTab = new Dictionary<string, ProcInfoTab>();
+            Dictionary<string, List<ProcInfoTab>> ProcTab = new Dictionary<string, List<ProcInfoTab>>();
 
             /// <summary>
             /// 进程状态
@@ -88,6 +78,8 @@ namespace ClassManager_StudentCrack._Module
             {
                 // 填表
                 ProcInfoTab Table = new ProcInfoTab();
+
+                List<ProcInfoTab> LTable = new List<ProcInfoTab>();
 
                 // Name
                 Table.ProcName = ProcName;
@@ -127,7 +119,9 @@ namespace ClassManager_StudentCrack._Module
                 }
                 Table.PID = PID;
 
-                ProcTab.Add(ProcName, Table);
+                LTable.Add(Table);
+
+                ProcTab.Add(ProcName, LTable);
                 return true;
             }
 
@@ -158,13 +152,14 @@ namespace ClassManager_StudentCrack._Module
             {
                 try
                 {
-                    IntPtr hProc = ProcTab[ProcName].Handle;
+                    IntPtr hProc = ProcTab[ProcName][0].Handle;
                     NtSuspendProcess(hProc);
                     CloseHandle(hProc);
                     return true;
                 }
-                catch (KeyNotFoundException)
+                catch (KeyNotFoundException e)
                 {
+                    Loger.Error(string.Format("未在表中找到{0}进程,无法挂起", ProcName), e);
                     return false;
                 }
             }
@@ -182,13 +177,14 @@ namespace ClassManager_StudentCrack._Module
             {
                 try
                 {
-                    IntPtr hProc = ProcTab[ProcName].Handle;
+                    IntPtr hProc = ProcTab[ProcName][0].Handle;
                     NtResumeProcess(hProc);
                     CloseHandle(hProc);
                     return true;
                 }
-                catch (KeyNotFoundException)
+                catch (KeyNotFoundException e)
                 {
+                    Loger.Error(string.Format("未在表中找到{0}进程,无法释放", ProcName), e);
                     return false;
                 }
             }
@@ -209,18 +205,40 @@ namespace ClassManager_StudentCrack._Module
                 {
                     if (Suspend)
                     {
-                        IntPtr hProc = ProcTab[ProcName].Handle;
+                        IntPtr hProc = ProcTab[ProcName][0].Handle;
                         NtResumeProcess(hProc);
                         CloseHandle(hProc);
                     }
                     Process.GetProcessById(PID).Kill();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Loger.Error(string.Format("无法获取正确进程PID[{0}]或句柄,结束进程失败", ProcName), e);
                     return false;
                 }
             }
+
+
+            #region EventDefine
+
+            public class ProcEventArgs : EventArgs
+            {
+                public string ProcName { get; }
+                public int PID { get; }
+
+                public ProcEventArgs(string ProcName, int PID)
+                {
+                    this.ProcName = ProcName;
+                    this.PID = PID;
+                }
+            }
+
+
+            public event EventHandler<ProcEventArgs> ProcExit;
+
+
+            #endregion
 
 
 
@@ -231,7 +249,7 @@ namespace ClassManager_StudentCrack._Module
             {
                 while (true)
                 {
-                    Delay(200);
+                    Timer.Sleep(200);
                     // System.Windows.Forms.MessageBox.Show(ProcTab.Count.ToString());
                     ReStart:
                     try
@@ -240,10 +258,11 @@ namespace ClassManager_StudentCrack._Module
                         {
                             try
                             {
-                                _ = Process.GetProcessById(ProcTab[key].PID);
+                                ProcTab[key][0].Handle = Process.GetProcessById(ProcTab[key][0].PID).Handle;
                             }
                             catch (ArgumentException)
                             {
+                                ProcExit(this, new ProcEventArgs(ProcTab[key][0].ProcName, ProcTab[key][0].PID));
                                 ProcTab.Remove(key);
                             }
                         }
@@ -272,15 +291,18 @@ namespace ClassManager_StudentCrack._Module
             /// <para>注: 带参函数请用 void 包装</para>
             /// </param>
             /// <param name="Start">是否启动</param>
+            /// <param name="IsBackGround">是否为后台进程</param>
             /// <returns>
             /// <para>True: 添加成功</para>
             /// <para>False: 未知错误</para>
             /// </returns>
-            public bool Add(string Name, Action Function, bool Start = true)
+            public bool Add(string Name, Action Function, bool Start = true, bool IsBackGround = false)
             {
                 try
                 {
                     Thread thread = new Thread(() => Function());
+                    thread.Name = Name;
+                    thread.IsBackground = IsBackGround;
                     ThreTab.Add(Name, thread);
                     if (Start)
                     {
@@ -288,8 +310,9 @@ namespace ClassManager_StudentCrack._Module
                     }
                     return true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Loger.Error("内存空间不足", e);
                     return false;
                 }
             }

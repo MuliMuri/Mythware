@@ -23,15 +23,25 @@ namespace ClassManager_StudentCrack
         [STAThread]
         static void Main()
         {
-            Test();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            try
+            {
+                Init();
+                Test();
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
+            }
+            catch (Exception e)
+            {
+                Loger.Fatal("主进程崩溃", e);
+                Loger.MainThreadDied = true;
+            }
         }
 
-        static void asd()
+        static void Init()
         {
-            MessageBox.Show("ok");
+            Loger loger = new Loger();
+            loger.Init();
         }
 
         static void Test()
@@ -65,6 +75,10 @@ namespace ClassManager_StudentCrack
             // MemCore.ThreadManager threadManager = new MemCore.ThreadManager();
             // asd();
             // threadManager.Add("a", asd);
+            // Logger logger = new Logger(Logger.Level.ALL);
+            // logger.a = 1;
+            // int a = 0;
+            // int b = 3 / a;
         }
     }
 }

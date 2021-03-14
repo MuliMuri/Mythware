@@ -8,11 +8,16 @@ using ClassManager_StudentCrack._Function;
 using ClassManager_StudentCrack._Init;
 using ClassManager_StudentCrack._NetWork;
 using ClassManager_StudentCrack._Module;
+using ClassManager_StudentCrack._Global;
 
 namespace ClassManager_StudentCrack
 {
     public partial class MainForm : Form
     {
+        Global Global = new Global();
+        
+        
+
         public bool IsIntercept;
         public int MytWndIndex;
 
@@ -20,9 +25,6 @@ namespace ClassManager_StudentCrack
         private List<Dictionary<string, string>> CardInfos;
         private Window window = new Window();
         private int InceptWndCount = 0;                         // 拦截对话框计数
-
-        MemCore.ProcessManager processManager = new MemCore.ProcessManager();
-        Window.WindowManager windowManager = new Window.WindowManager();
 
         #region 重写WndProc
         private enum WM_MSG
@@ -44,7 +46,7 @@ namespace ClassManager_StudentCrack
                         case HotKeys.Global.HotKeyIDs.WindowTop:
                             WindowState = FormWindowState.Normal;
 
-                            windowManager.TopWindow(Text);
+                            // windowManager.TopWindow(Text);
                             
                             MainWin_CheckBox_TopWindow.Checked = true;
                             // MessageBox.Show("Ctrl + Alt + Shift + O");
@@ -75,10 +77,23 @@ namespace ClassManager_StudentCrack
         public MainForm()
         {
             InitializeComponent();
-            processManager.Add("StudentMain");
 
-            windowManager.Add(hWnd: Handle);
-            windowManager.TopWindow(Text);
+            Global.ProcessManager.ProcExit += Event_ProcExit;   // 绑定事件
+
+            Global.ProcessManager.Add(Global.MythwareName);
+            
+            Global.WindowManager.Add(hWnd: this.Handle);
+            //Global.WindowManager.TopWindow(Text);
+
+
+        }
+
+        private void Event_ProcExit(object sender, TaskCore.ProcessManager.ProcEventArgs e)
+        {
+            if (e.ProcName == Global.MythwareName)
+            {
+                SW_RunState_Label_State(0);
+            }
         }
 
         // TODO: 日志类
@@ -87,7 +102,7 @@ namespace ClassManager_StudentCrack
         private void MythwareWindowRun()
         {
             // 挂起极域进程
-            processManager.Suspend("StudentMain");
+            Global.ProcessManager.Suspend(Global.MythwareName);
             for (int i = 0; i < window.RunMytWnds.Count; i++)
             {
                 Intercept intercept = new Intercept(window.RunMytWnds[i]);
@@ -115,7 +130,7 @@ namespace ClassManager_StudentCrack
             if (InceptWndCount == 0)
             {
                 // 释放极域进程
-                processManager.Resume("StudentMain");
+                Global.ProcessManager.Resume(Global.MythwareName);
 
                 window.SetMythwareWindow();
             }
@@ -171,7 +186,7 @@ namespace ClassManager_StudentCrack
         #region Usual
         private void Usual_Button_ShutdownTask_Click(object sender, EventArgs e)
         {
-            if (processManager.Kill("SutdentMain"))
+            if (Global.ProcessManager.Kill(Global.MythwareName))
             {
                 MythwareState = false;
                 RunState_Label_State.Text = "STOPPING";
@@ -179,7 +194,7 @@ namespace ClassManager_StudentCrack
             }
             else
             {
-
+            
             }
         }
         #endregion
@@ -200,7 +215,37 @@ namespace ClassManager_StudentCrack
 
         #endregion
 
+        #region Sundry
 
+        /// <summary>
+        /// 状态标签切换
+        /// </summary>
+        /// <param name="State">
+        /// <para>0: STOPPING</para>
+        /// <para>1: RUNNING</para>
+        /// </param>
+        private void SW_RunState_Label_State(int State)
+        {
+            switch (State)
+            {
+                case 0:
+                    // STOPPING
+                    RunState_Label_State.Text = "STOPPING";
+                    RunState_Label_State.BackColor = System.Drawing.Color.LightGreen;
+                    break;
+
+                case 1:
+                    // RUNNING
+                    RunState_Label_State.Text = "RUNNING";
+                    RunState_Label_State.BackColor = System.Drawing.Color.LightCoral;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        #endregion
 
 
         private void ToolStripMenuItem_LogTextBox_Clear_Click(object sender, EventArgs e)
@@ -264,7 +309,6 @@ namespace ClassManager_StudentCrack
                 window.SetMyWindow(Handle);
                 window.LastIsTop = window.IsTop;
             }
-
             // 检测极域窗口
             if(window.CheckMythwareWindow())
             {

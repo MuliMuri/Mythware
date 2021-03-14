@@ -69,7 +69,10 @@
     <Compile Include="CMD\CMD.cs" />
     <Compile Include="Function\Crypto.cs" />
     <Compile Include="Function\HotKeys.cs" />
-    <Compile Include="Function\Logs.cs" />
+    <Compile Include="Module\Timer.cs" />
+    <Compile Include="Module\Loger.cs" />
+    <Compile Include="Global\Event.cs" />
+    <Compile Include="Global\Global.cs" />
     <Compile Include="Module\MemCore.cs" />
     <Compile Include="Module\Window.cs" />
     <Compile Include="Init\Infos.cs" />
@@ -140,6 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\WhiteBoard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Note.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

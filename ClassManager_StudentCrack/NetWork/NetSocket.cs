@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 
+using ClassManager_StudentCrack;
+using ClassManager_StudentCrack._Global;
+using ClassManager_StudentCrack._Module;
+
 namespace ClassManager_StudentCrack._NetWork
 {
     /// <summary>
@@ -52,10 +56,20 @@ namespace ClassManager_StudentCrack._NetWork
                     }
                     return true;
                 }
-                catch (Exception)
+                catch (ArgumentNullException ex)
                 {
+                    Loger.Error("数据不能为空！", ex);
                     return false;
-                    throw;
+                }
+                catch(SocketException ex)
+                {
+                    Loger.Error("UDP套接字错误", ex);
+                    return false;
+                }
+                catch(ObjectDisposedException ex)
+                {
+                    Loger.Error("UDPSocket对象被提前释放", ex);
+                    return false;
                 }
             }
         }
