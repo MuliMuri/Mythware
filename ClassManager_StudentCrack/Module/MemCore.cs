@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
+using System.Security;
 using System.Threading;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace ClassManager_StudentCrack._Module
 {
@@ -18,13 +19,6 @@ namespace ClassManager_StudentCrack._Module
         /// </summary>
         public class ProcessManager
         {
-            public ProcessManager()
-            {
-                ThreadManager threadManager = new ThreadManager();
-                threadManager.Add("ProcessManager_CheckLive", CheckLive, IsBackGround:true);
-            }
-
-
             #region DllImport
             [DllImport("ntdll.dll")]
             private static extern uint NtResumeProcess([In] IntPtr processHandle);
@@ -37,25 +31,18 @@ namespace ClassManager_StudentCrack._Module
             private static extern bool CloseHandle([In] IntPtr handle);
             #endregion
 
-            /// <summary>
-            /// 进程表
-            /// </summary>
-            Dictionary<string, List<ProcInfoTab>> ProcTab = new Dictionary<string, List<ProcInfoTab>>();
 
-            /// <summary>
-            /// 进程状态
-            /// </summary>
-            enum ProcState
+
+            public ProcessManager()
             {
-                Running,
-                Stopping,
-                Suspend
+                ThreadManager threadManager = new ThreadManager();
+                threadManager.Add("ProcessManager_CheckLive", CheckLive, IsBackGround:true);
             }
 
             /// <summary>
             /// 进程表模板
             /// </summary>
-            class ProcInfoTab
+            private class ProcInfoTab
             {
                 public string ProcName { get; set; }
                 public int PID { get; set; }
@@ -63,6 +50,20 @@ namespace ClassManager_StudentCrack._Module
                 public ProcState State { get; set; }
             }
 
+            /// <summary>
+            /// 进程状态
+            /// </summary>
+            private enum ProcState
+            {
+                Running,
+                Stopping,
+                Suspend
+            }
+
+            /// <summary>
+            /// 进程表
+            /// </summary>
+            Dictionary<string, List<ProcInfoTab>> ProcTab = new Dictionary<string, List<ProcInfoTab>>();
 
 
             /// <summary>
@@ -222,25 +223,27 @@ namespace ClassManager_StudentCrack._Module
 
             #region EventDefine
 
-            public class ProcEventArgs : EventArgs
+            /// <summary>
+            /// 进程退出事件
+            /// </summary>
+            public class ProcExitEventArgs : EventArgs
             {
                 public string ProcName { get; }
                 public int PID { get; }
 
-                public ProcEventArgs(string ProcName, int PID)
+                public ProcExitEventArgs(string ProcName, int PID)
                 {
                     this.ProcName = ProcName;
                     this.PID = PID;
                 }
             }
 
-
-            public event EventHandler<ProcEventArgs> ProcExit;
-
+            /// <summary>
+            /// 事件定义
+            /// </summary>
+            public event EventHandler<ProcExitEventArgs> ProcExit;
 
             #endregion
-
-
 
             /// <summary>
             /// 检查进程管理器中进程是否存活
@@ -262,7 +265,7 @@ namespace ClassManager_StudentCrack._Module
                             }
                             catch (ArgumentException)
                             {
-                                ProcExit(this, new ProcEventArgs(ProcTab[key][0].ProcName, ProcTab[key][0].PID));
+                                ProcExit(this, new ProcExitEventArgs(ProcTab[key][0].ProcName, ProcTab[key][0].PID));
                                 ProcTab.Remove(key);
                             }
                         }
@@ -280,6 +283,9 @@ namespace ClassManager_StudentCrack._Module
         /// </summary>
         public class ThreadManager
         {
+            /// <summary>
+            /// 线程表
+            /// </summary>
             Dictionary<string, Thread> ThreTab = new Dictionary<string, Thread>();
 
             /// <summary>
@@ -300,9 +306,12 @@ namespace ClassManager_StudentCrack._Module
             {
                 try
                 {
-                    Thread thread = new Thread(() => Function());
-                    thread.Name = Name;
-                    thread.IsBackground = IsBackGround;
+                    Thread thread = new Thread(() => Function())
+                    {
+                        Name = Name,
+                        IsBackground = IsBackGround
+                    };
+
                     ThreTab.Add(Name, thread);
                     if (Start)
                     {
@@ -310,12 +319,45 @@ namespace ClassManager_StudentCrack._Module
                     }
                     return true;
                 }
-                catch (Exception e)
+                catch (KeyNotFoundException e)
                 {
                     Loger.Error("内存空间不足", e);
                     return false;
                 }
             }
+
+            /// <summary>
+            /// 从线程管理器中删除线程
+            /// </summary>
+            /// <param name="Name">进程名</param>
+            /// <returns>
+            /// <para>True: 删除成功</para>
+            /// <para>False: 线程不存在</para>
+            /// </returns>
+            public bool Remove(string Name)
+            {
+                try
+                {
+                    ThreTab[Name].Abort();
+                    ThreTab.Remove(Name);
+                    return true;
+                }
+                catch (SecurityException e)
+                {
+                    Loger.Error("线程拒绝访问", e);
+                }
+                catch (ThreadStateException e)
+                {
+                    Loger.Error("线程状态错误", e);
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Loger.Error(string.Format("线程队列中不存在 {0} 线程", Name), e);
+                }
+
+                return false;
+            }
+
         }
     }
 }

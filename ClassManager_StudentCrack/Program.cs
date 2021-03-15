@@ -41,7 +41,6 @@ namespace ClassManager_StudentCrack
         static void Init()
         {
             Loger loger = new Loger();
-            loger.Init();
         }
 
         static void Test()

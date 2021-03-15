@@ -88,7 +88,7 @@ namespace ClassManager_StudentCrack
 
         }
 
-        private void Event_ProcExit(object sender, TaskCore.ProcessManager.ProcEventArgs e)
+        private void Event_ProcExit(object sender, TaskCore.ProcessManager.ProcExitEventArgs e)
         {
             if (e.ProcName == Global.MythwareName)
             {

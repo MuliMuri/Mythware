@@ -1,39 +1,41 @@
-﻿
-
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace ClassManager_StudentCrack._Module
 {
-    //TODO: ?自动捕获异常
     /// <summary>
     /// 日志类定义
-    /// <para></para>
     /// </summary>
     class Loger
     {
-        public static bool MainThreadDied { get; set; } = false;
-
-        public Loger()
-        {
-            
-        }
-
         /// <summary>
-        /// 日志等级
+        /// 主线程是否退出
         /// </summary>
-        public static LevelDefine Level { get; set; } = LevelDefine.INFO;
+        public static bool MainThreadDied { get; set; } = false;
 
         /// <summary>
         /// 线程管理器
         /// </summary>
         private TaskCore.ThreadManager ThreadManager = new TaskCore.ThreadManager();
 
+
+
+        public Loger()
+        {
+            Init();
+        }
+
         /// <summary>
-        /// 日志列队
+        /// 日志表模板
         /// </summary>
-        private static List<LogInfoTab> LogTaskList = new List<LogInfoTab>();
+        private class LogInfoTab
+        {
+            public int Level { get; set; }
+            public string Msg { get; set; }
+            public string Time { get; set; }
+            public Exception Exception { get; set; }
+        }
 
         /// <summary>
         /// 日志等级定义
@@ -50,6 +52,11 @@ namespace ClassManager_StudentCrack._Module
         }
 
         /// <summary>
+        /// 日志列队
+        /// </summary>
+        private static List<LogInfoTab> LogTaskList = new List<LogInfoTab>();
+
+        /// <summary>
         /// 单例实例
         /// </summary>
         /// <returns>Logger 对象</returns>
@@ -58,22 +65,12 @@ namespace ClassManager_StudentCrack._Module
             return new Loger();
         }
 
-        /// <summary>
-        /// 日志表模板
-        /// </summary>
-        class LogInfoTab
-        {
-            public int Level { get; set; }
-            public string Msg { get; set; }
-            public string Time { get; set; }
-            public Exception Exception { get; set; }
-        }
 
         /// <summary>
         /// 初始化
         /// <para>注: 首次调用即可</para>
         /// </summary>
-        public void Init()
+        private void Init()
         {
             ThreadManager.Add("Logger", ListTasks);
         }
@@ -150,14 +147,6 @@ namespace ClassManager_StudentCrack._Module
 
         #endregion
 
-
-
-
-
-
-
-
-
         /// <summary>
         /// 向日志表添加日志条目
         /// </summary>
@@ -181,7 +170,6 @@ namespace ClassManager_StudentCrack._Module
             LogTaskList.Add(logInfoTab);
         }
 
-        
         /// <summary>
         /// 列表任务处理
         /// </summary>
@@ -228,7 +216,7 @@ namespace ClassManager_StudentCrack._Module
                 "\t\t{3}\r\n" +
                 "Stack: \t\t{4}\r\n" +
                 "========================================\r\n";
-            
+
             string strLevel;
 
             switch (Level)
@@ -257,7 +245,6 @@ namespace ClassManager_StudentCrack._Module
             string fileName = string.Format("{0}.log", DateTime.Now.ToString("yyyy-MM-dd"));
             File.AppendAllText(fileName, Log);
         }
-
 
     }
 }
