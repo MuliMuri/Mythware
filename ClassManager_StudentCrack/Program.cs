@@ -30,6 +30,7 @@ namespace ClassManager_StudentCrack
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm());
+                Loger.MainThreadDied = true;
             }
             catch (Exception e)
             {
@@ -40,7 +41,7 @@ namespace ClassManager_StudentCrack
 
         static void Init()
         {
-            Loger loger = new Loger();
+            new Loger();
         }
 
         static void Test()
@@ -78,6 +79,7 @@ namespace ClassManager_StudentCrack
             // logger.a = 1;
             // int a = 0;
             // int b = 3 / a;
+            // Loger.Info("aa");
         }
     }
 }

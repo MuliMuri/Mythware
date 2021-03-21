@@ -85,7 +85,7 @@ namespace ClassManager_StudentCrack
             Global.WindowManager.Add(hWnd: this.Handle);
             //Global.WindowManager.TopWindow(Text);
 
-
+            Loger.SetTextBox(MainWin_TextBox_Log);
         }
 
         private void Event_ProcExit(object sender, TaskCore.ProcessManager.ProcExitEventArgs e)
@@ -97,7 +97,8 @@ namespace ClassManager_StudentCrack
         }
 
         // TODO: 日志类
-
+        public delegate int InvokeTextBox(string text);
+        
 
         private void MythwareWindowRun()
         {

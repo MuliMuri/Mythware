@@ -33,19 +33,11 @@ namespace ClassManager_StudentCrack._Function
             {
                 // 导出 注册全局热键 函数
                 [DllImport("user32.dll", SetLastError = true)]
-                private static extern bool RegisterHotKey(
-                    IntPtr hWnd,
-                    int ID,
-                    KeyModifiers fsModifiers,
-                    Keys vk
-                    );
+                private static extern bool RegisterHotKey(IntPtr hWnd, int ID, KeyModifiers fsModifiers, Keys vk);
 
                 // 导出 卸载全局热键 函数
                 [DllImport("user32.dll", SetLastError = true)]
-                private static extern bool UnregisterHotKey(
-                    IntPtr hWnd,
-                    int ID
-                    );
+                private static extern bool UnregisterHotKey(IntPtr hWnd, int ID);
 
                 /// <summary>
                 /// 注册全局热键
@@ -55,12 +47,7 @@ namespace ClassManager_StudentCrack._Function
                 /// <param name="fsModifiers">标识辅助键</param>
                 /// <param name="vk">热键内容</param>
                 /// <returns>BOOL</returns>
-                public static bool RegHotKey(
-                    IntPtr hWnd,
-                    int ID,
-                    KeyModifiers fsModifiers,
-                    Keys vk
-                    )
+                public static bool RegHotKey(IntPtr hWnd, int ID, KeyModifiers fsModifiers, Keys vk)
                 {
                     return RegisterHotKey(hWnd, ID, fsModifiers, vk);
                 }
@@ -71,10 +58,7 @@ namespace ClassManager_StudentCrack._Function
                 /// <param name="hWnd">窗口句柄</param>
                 /// <param name="ID">热键ID</param>
                 /// <returns>BOOL</returns>
-                public static bool UnRegHotKey(
-                    IntPtr hWnd,
-                    int ID
-                    )
+                public static bool UnRegHotKey(IntPtr hWnd, int ID)
                 {
                     return UnregisterHotKey(hWnd, ID);
                 }

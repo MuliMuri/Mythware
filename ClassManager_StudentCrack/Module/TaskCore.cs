@@ -73,10 +73,15 @@ namespace ClassManager_StudentCrack._Module
             /// <param name="PID">进程PID</param>
             /// <returns>
             /// <para>True: 添加成功</para>
-            /// <para>False: 进程不存在</para>
+            /// <para>False: 进程不存在 / 重复添加</para>
             /// </returns>
             public bool Add(string ProcName, int PID = 0)
             {
+                if (!ProcTab.ContainsKey(ProcName))
+                {
+                    return false;
+                }
+
                 // 填表
                 ProcInfoTab Table = new ProcInfoTab();
 
